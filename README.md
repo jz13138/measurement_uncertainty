@@ -17,16 +17,16 @@ for every one of the 37 frequency points (555 individual readings).
 ├── README.md
 ├── GUM_Messwertanalyse.ipynb   # the complete analysis
 ├── data
-│   ├── raw                      # input data, as supplied
-│   │   ├── measurement_series.tsv        # wide format, 37 x 15, one row per frequency
-│   │   └── measurement_series_long.csv   # tidy format written by the notebook
-│   └── processed                # result tables written by the notebook
-│       ├── GUM_uncertainty_budget.csv    # u_A, u_B, u_c, ν_eff, U, coverage, trend flag
-│       ├── TypeA_statistics.csv          # n, mean, s, u_A, min, max
-│       ├── Statistical_tests.csv         # Shapiro–Wilk, Grubbs, run trend, split-half
-│       └── Run_trend_analysis.csv        # trend-aware Type A (GUM Annex H)
+│   ├── raw                      # input, exactly as supplied
+│   │   └── measurement_series.tsv       # 37 x 15, one row per frequency, tab separated
+│   └── processed                # everything the notebook writes
+│       ├── measurement_series_long.csv  # tidy format + per-reading deviation / verdict
+│       ├── GUM_uncertainty_budget.csv   # u_A, u_B, u_c, ν_eff, U, coverage, trend flag
+│       ├── TypeA_statistics.csv         # n, mean, s, u_A, min, max
+│       ├── Statistical_tests.csv        # Shapiro–Wilk, Grubbs, run trend, split-half
+│       └── Run_trend_analysis.csv       # trend-aware Type A (GUM Annex H)
 └── figures                      # plots written by the notebook
-    ├── GUM_whisker_boxplot_k2.png          # whisker box plot, coverage factor k = 2
+    ├── GUM_whisker_boxplot_k2.png       # whisker box plot, coverage factor k = 2
     ├── Tukey_with_GUM_interval.png
     ├── Response_with_coverage_band.png
     ├── Run_trend_diagnostic.png
@@ -37,9 +37,10 @@ Frequency labels are auto-formatted in engineering units (`fmt_freq()`): everyth
 below 1 MHz is shown in kHz (e.g. `82 kHz`, not `0.082 MHz`). The processed tables keep
 both the readable `group` label and the numeric `f_MHz` column.
 
-Only `data/raw/measurement_series.tsv` is an input; everything else under `data/` and
-`figures/` is regenerated when the notebook is run. The raw file is also embedded in the
-notebook itself, so the analysis stays self-contained.
+`data/raw/measurement_series.tsv` is the **only input** — the notebook reads it from disk
+and carries no embedded copy of the data, so the file on disk and the analysed data cannot
+drift apart. Run the notebook from the repository root so the relative path resolves.
+Everything else under `data/` and `figures/` is regenerated on each run.
 
 ## What each figure shows
 
