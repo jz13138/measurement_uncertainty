@@ -10,20 +10,42 @@ $$\hat\mu = \bar x \pm U(k{=}2), \qquad U = 2\,u_c = 2\sqrt{u_A^2 + u_B^2}$$
 
 for every one of the 37 frequency points (555 individual readings).
 
-## Contents
+## Repository structure
 
-| File | Description |
+```
+.
+├── README.md
+├── GUM_Messwertanalyse.ipynb   # the complete analysis
+├── data
+│   ├── raw                      # input data, as supplied
+│   │   ├── measurement_series.tsv        # wide format, 37 x 15, one row per frequency
+│   │   └── measurement_series_long.csv   # tidy format written by the notebook
+│   └── processed                # result tables written by the notebook
+│       ├── GUM_uncertainty_budget.csv    # u_A, u_B, u_c, ν_eff, U, coverage, trend flag
+│       ├── TypeA_statistics.csv          # n, mean, s, u_A, min, max
+│       ├── Statistical_tests.csv         # Shapiro–Wilk, Grubbs, run trend, split-half
+│       └── Run_trend_analysis.csv        # trend-aware Type A (GUM Annex H)
+└── figures                      # plots written by the notebook
+    ├── GUM_whisker_boxplot_k2.png          # whisker box plot, coverage factor k = 2
+    ├── Tukey_with_GUM_interval.png
+    ├── Response_with_coverage_band.png
+    ├── Run_trend_diagnostic.png
+    └── Relative_expanded_uncertainty.png
+```
+
+Only `data/raw/measurement_series.tsv` is an input; everything else under `data/` and
+`figures/` is regenerated when the notebook is run. The raw file is also embedded in the
+notebook itself, so the analysis stays self-contained.
+
+## What each figure shows
+
+| Figure | Description |
 |---|---|
-| `GUM_Messwertanalyse.ipynb` | The complete analysis — run this first, it regenerates everything below |
-| `GUM_whisker_boxplot_k2.png` | **Whisker box plot for the coverage factor `k = 2`**: box = `x̄ ± u_A`, whiskers = `x̄ ± U` |
-| `Tukey_with_GUM_interval.png` | Tukey box plot of the 15 raw readings with the GUM interval overlaid |
-| `Response_with_coverage_band.png` | Frequency response with the coverage band, and `s` / `u_A` / `U` vs. frequency |
-| `Run_trend_diagnostic.png` | Readings vs. run index for the eight steepest groups |
-| `Relative_expanded_uncertainty.png` | Relative expanded uncertainty `U/x̄` over the sweep |
-| `GUM_uncertainty_budget.csv` | Full budget per frequency point (`u_A`, `u_B`, `u_c`, `ν_eff`, `U`, coverage, trend flag) |
-| `TypeA_statistics.csv` | `n`, mean, `s`, `u_A`, min, max per frequency point |
-| `Statistical_tests.csv` | Shapiro–Wilk, Grubbs, linear run trend, split-half test per group |
-| `Run_trend_analysis.csv` | Trend-aware Type A evaluation (GUM Annex H) |
+| `figures/GUM_whisker_boxplot_k2.png` | **Whisker box plot for the coverage factor `k = 2`**: box = `x̄ ± u_A` (k = 1), whiskers = `x̄ ± U` (k = 2), grey = observed min…max; left panel absolute, right panel normalised to `u_A` |
+| `figures/Tukey_with_GUM_interval.png` | Tukey box plot of the 15 raw readings with the GUM interval overlaid |
+| `figures/Response_with_coverage_band.png` | Frequency response with coverage band, and `s` / `u_A` / `U` vs. frequency |
+| `figures/Run_trend_diagnostic.png` | Readings vs. run index for the eight steepest groups |
+| `figures/Relative_expanded_uncertainty.png` | Relative expanded uncertainty `U/x̄` over the sweep |
 
 ## Requirements
 
@@ -32,7 +54,8 @@ pip install numpy pandas scipy matplotlib
 ```
 
 Python 3.9+ (developed and verified with 3.12, numpy 1.26, pandas 3.0, scipy 1.11,
-matplotlib 3.6). Run the notebook top to bottom; every figure and CSV is written next to it.
+matplotlib 3.6). Run the notebook from the repository root; it creates `data/processed/`
+and `figures/` if needed and rewrites all tables and plots inside them.
 
 ## Method summary
 
