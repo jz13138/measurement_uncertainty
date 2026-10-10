@@ -33,6 +33,10 @@ for every one of the 37 frequency points (555 individual readings).
     └── Relative_expanded_uncertainty.png
 ```
 
+Frequency labels are auto-formatted in engineering units (`fmt_freq()`): everything
+below 1 MHz is shown in kHz (e.g. `82 kHz`, not `0.082 MHz`). The processed tables keep
+both the readable `group` label and the numeric `f_MHz` column.
+
 Only `data/raw/measurement_series.tsv` is an input; everything else under `data/` and
 `figures/` is regenerated when the notebook is run. The raw file is also embedded in the
 notebook itself, so the analysis stays self-contained.
@@ -83,13 +87,13 @@ effect is visible.
 
 * Repeatability spans a factor of 30 across the sweep: `s = 0.030 … 0.94` dBm,
   `U(k=2) = 0.017 … 0.22` dBm. 15 repetitions buy a factor of `√15 = 3.87`.
-* Relative expanded uncertainty: median `0.39 %`, worst case `6.7 %` at `0.1 MHz`,
+* Relative expanded uncertainty: median `0.39 %`, worst case `6.7 %` at `100 kHz`,
   best case `0.10 %` at `1.8 MHz`.
 * **The measurand was not stationary in 19 of the 37 series** — most strongly at
-  `0.1 (B)`, `0.135` and `0.182 MHz`, where the level rises monotonically across the 15
+  the `100 kHz` block B, `135 kHz` and `182 kHz`, where the level rises monotonically across the 15
   runs. The equivalent Type B drift term reaches `1.52` dBm there, six times the random
   Type A term. A single mean value is therefore only conditionally valid for these groups.
-* The duplicated `0.100 MHz` entry is **not** a repetition (Welch `t = 98`,
+* The duplicated `100 kHz` entry is **not** a repetition (Welch `t = 98`,
   `p ≈ 1e-26`) but two different measurement conditions, so it is evaluated as the
   separate groups `0.1 (A)` and `0.1 (B)`.
 
