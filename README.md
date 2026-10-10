@@ -87,8 +87,14 @@ effect is visible.
 
 * Repeatability spans a factor of 30 across the sweep: `s = 0.030 … 0.94` dBm,
   `U(k=2) = 0.017 … 0.22` dBm. 15 repetitions buy a factor of `√15 = 3.87`.
-* Relative expanded uncertainty: median `0.39 %`, worst case `6.7 %` at `100 kHz`,
+* Relative expanded uncertainty: median `0.39 %`, worst case `6.66 %` at `100 kHz` (block B),
   best case `0.10 %` at `1.8 MHz`.
+* **All 555 readings comply with the specified ±3 dB tolerance.** The tolerance is
+  applied per reading, in dB: a reading complies when `|x_i − x̄| ≤ 3 dB`. The largest
+  deviation of any reading from its group mean is `1.57 dB` (at `100 kHz` block B),
+  leaving 48 % margin. It is drawn as a ±3 dB envelope around each frequency point on the
+  two figures that show the readings — never as a level band across the sweep, since it
+  is not a limit on the level versus frequency. Configured by `TOL_DB` in the notebook.
 * **The measurand was not stationary in 19 of the 37 series** — most strongly at
   the `100 kHz` block B, `135 kHz` and `182 kHz`, where the level rises monotonically across the 15
   runs. The equivalent Type B drift term reaches `1.52` dBm there, six times the random
